@@ -1,0 +1,14 @@
+#Android
+local.properties
+
+#Captures
+captures/
+
+#Gradle
+build/
+.gradle
+
+#IntelliJ IDEA
+.idea/
+*.iml
+

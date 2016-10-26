@@ -1,0 +1,12 @@
+apply plugin: 'java'
+
+dependencies {
+    compile 'com.google.code.findbugs:jsr305:3.0.1'
+
+    testCompile 'junit:junit:4.11'
+    testCompile 'org.mockito:mockito-all:1.9.5'
+    testCompile 'com.google.truth:truth:0.25'
+}
+
+sourceCompatibility = "1.7"
+targetCompatibility = "1.7"

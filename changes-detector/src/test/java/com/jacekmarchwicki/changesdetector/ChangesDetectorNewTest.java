@@ -67,6 +67,75 @@ public class ChangesDetectorNewTest {
     }
 
     @Test
+    public void testSwapItemsWithNoChange_dataEquals() throws Exception {
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)),
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)));
+    }
+    @Test
+    public void testSwapItemsInTheMiddle_dataEquals() throws Exception {
+
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)),
+                ImmutableList.of(new Cat(1), new Cat(3), new Cat(2), new Cat(4)));
+    }
+    @Test
+    public void testSwapItemsAndRemoveLast_dataEquals() throws Exception {
+
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)),
+                ImmutableList.of(new Cat(1), new Cat(3), new Cat(2)));
+    }
+    @Test
+    public void testSwapItemsAtTheEndAndRemoveFirst_dataEquals() throws Exception {
+
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3)),
+                ImmutableList.of(new Cat(3), new Cat(2)));
+    }
+    @Test
+    public void testSwapItemsAndRemoveFirst_dataEquals() throws Exception {
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)),
+                ImmutableList.of(new Cat(3), new Cat(2), new Cat(4)));
+    }
+    @Test
+    public void testSwapItemsAndChangeLast_dataEquals() throws Exception {
+
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)),
+                ImmutableList.of(new Cat(1), new Cat(3), new Cat(2), new Cat(4).withName("krowa")));
+    }
+
+    @Test
+    public void testSwapItemsAndChangeMiddle_dataEquals() throws Exception {
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)),
+                ImmutableList.of(new Cat(1), new Cat(3), new Cat(2).withName("krowa"), new Cat(4)));
+
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)),
+                ImmutableList.of(new Cat(1), new Cat(3).withName("krowa"), new Cat(2), new Cat(4)));
+    }
+
+    @Test
+    public void testSwapItemsAndChangeFirst_dataEquals() throws Exception {
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)),
+                ImmutableList.of(new Cat(1).withName("krowa"), new Cat(3), new Cat(2), new Cat(4)));
+    }
+
+    private void swapDataAndCheckIfEquals(@Nonnull ImmutableList<Cat> startData, @Nonnull ImmutableList<Cat> newData) {
+        final TestAdapter testAdapter = new TestAdapter();
+        System.out.println("Start data: " + startData);
+        testAdapter.call(startData);
+
+        testAdapter.call(newData);
+
+        assert_().that(testAdapter.items()).isEqualTo(newData);
+    }
+
+    @Test
     public void testRandomElements_dataEquals() throws Exception {
         for (int i = 0; i < 100; ++i) {
             final TestAdapter testAdapter = new TestAdapter();
@@ -167,9 +236,9 @@ public class ChangesDetectorNewTest {
                 items.add(new Cat(i, name));
             }
 
-            //        final int swapStart = randomBetween(random, 0, items.size() - 2);
-            //        final int swapEnd = Math.min(items.size() - 1, swapStart + 2);
-            //        Collections.swap(items, swapStart, swapEnd);
+            final int swapStart = randomBetween(random, 0, items.size() - 2);
+            final int swapEnd = Math.min(items.size() - 1, swapStart + 2);
+            Collections.swap(items, swapStart, swapEnd);
             return Collections.unmodifiableList(items);
         }
 

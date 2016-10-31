@@ -126,15 +126,15 @@ public class ChangesDetector<T, H> {
             } else {
                 final H first = objects.get(0);
                 if (existInList(list, successPosition + 1, first)) {
+                    executeAction(adapter, ACTION_NONE, successPosition);
+
                     // changed order
                     adapter.notifyItemMoved(i + successPosition, successPosition);
 
                     if (force || !mDetector.same(item, objects.get(i))) {
                         executeAction(adapter, ACTION_CHANGED, successPosition);
-                    } else {
-                        executeAction(adapter, ACTION_NONE, successPosition);
                     }
-                    objects.remove(i);
+                    objects.remove(0);
                     successPosition += 1;
                 } else {
                     executeAction(adapter, ACTION_REMOVE, successPosition);

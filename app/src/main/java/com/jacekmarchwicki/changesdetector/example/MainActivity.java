@@ -158,9 +158,9 @@ public class MainActivity extends AppCompatActivity {
             items.add(new Data(i, name, color));
         }
 
-//        final int swapStart = randomBetween(random, 0, items.size() - 2);
-//        final int swapEnd = Math.min(items.size() - 1, swapStart + 2);
-//        Collections.swap(items, swapStart, swapEnd);
+        final int swapStart = randomBetween(random, 0, items.size() - 2);
+        final int swapEnd = Math.min(items.size() - 1, swapStart + 2);
+        Collections.swap(items, swapStart, swapEnd);
         return Collections.unmodifiableList(items);
     }
 

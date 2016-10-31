@@ -38,6 +38,8 @@ dependencies {
 
 ## How to use
 
+### With Universal Adapter
+
 Implement some Pojo with your data:
 
 ```java
@@ -135,16 +137,90 @@ recyclerView.setAdapter(adapter);
 Give new data to adapter:
 
 ```java
-adapter.call(Arrays.toList(new Data(1, "Cow"), Data(2, "Dg"), Data(3, "Cat"));
+adapter.call(Arrays.toList(new Data(1, "Cow"), new Data(2, "Dg"), new Data(3, "Cat"));
 ```
 
 And another data so recycler view will be nice animated:
 
 ```java
-adapter.call(Arrays.toList(Data(2, "Dog"), Data(3, "Cat"), new Data(4, "Elephant"));
+adapter.call(Arrays.toList(Data(2, "Dog"), new Data(3, "Cat"), new Data(4, "Elephant"));
 ```
 
-For more look on sample `app/`
+
+
+### Without Universal Adapter
+
+Implement some Pojo with your data:
+
+```java
+private class Data implements SimpleDetector.Detectable<Data> {
+
+    private final long id;
+    @Nonnull
+    private final String name;
+    private final int color;
+
+    Data(long id, @Nonnull String name, int color) {
+        this.id = id;
+        this.name = name;
+        this.color = color;
+    }
+
+    /**
+     * Return true if id matches
+     */
+    @Override
+    public boolean matches(@Nonnull Data item) {
+        return ((Data) item).id == id;
+    }
+
+    /**
+     * Return true if items are equal
+     */
+    @Override
+    public boolean same(@Nonnull Data item) {
+        return equals(item);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Data)) return false;
+        final Data data = (Data) o;
+        return id == data.id &&
+                name.equals(data.name) &&
+                color == data.color;
+    }
+}
+```
+
+Setup changes detector for your adapter
+
+```
+@Nonnull
+private final ChangesDetector<Data, Data> changesDetector =
+        new ChangesDetector<>(new SimpleDetector<Data>());
+```
+
+Give new data to your adapter:
+
+```java
+List<Data> data = Arrays.toList(new Data(1, "Cow"), new Data(2, "Dg"), new Data(3, "Cat"));
+yourAdapter.swapData(data)
+changesDetector.newData(yourAdapter, data, false);
+```
+
+And another data so recycler view will be nice animated:
+
+```java
+List<Data> data = Arrays.toList(Data(2, "Dog"), new Data(3, "Cat"), new Data(4, "Elephant"));
+yourAdapter.swapData(data)
+changesDetector.newData(yourAdapter, data, false);
+```
+
+### More
+
+For more, look on sample app at `app/` directory
 
 
 ## License

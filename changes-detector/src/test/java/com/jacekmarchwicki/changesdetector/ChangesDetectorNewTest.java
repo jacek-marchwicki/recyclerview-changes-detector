@@ -20,7 +20,7 @@ public class ChangesDetectorNewTest {
         private final java.util.List<Cat> items = new ArrayList<>();
         private ChangesDetector<Cat, Cat> detector = new ChangesDetector<>(new SimpleDetector<Cat>());
 
-        public void call(final List<Cat> newData) {
+        void call(final List<Cat> newData) {
             detector.newData(new ChangesDetector.ChangesAdapter() {
                 @Override
                 public void notifyItemRangeInserted(int start, int count) {
@@ -32,8 +32,7 @@ public class ChangesDetectorNewTest {
                 @Override
                 public void notifyItemRangeChanged(int start, int count) {
                     for (int i = 0; i < count; ++i) {
-                        items.remove(start + i);
-                        items.add(start + i, newData.get(start + i));
+                        items.set(start + i, newData.get(start + i));
                     }
                 }
 
@@ -46,13 +45,14 @@ public class ChangesDetectorNewTest {
 
                 @Override
                 public void notifyItemMoved(int fromPosition, int toPosition) {
-                    Collections.swap(items, fromPosition, toPosition);
+                    items.add(toPosition, items.remove(fromPosition));
+//                    Collections.swap(items, fromPosition, toPosition);
                 }
             }, newData, false);
         }
 
         @Nonnull
-        public List<Cat> items() {
+        List<Cat> items() {
             return items;
         }
     }
@@ -63,6 +63,7 @@ public class ChangesDetectorNewTest {
 
         final ImmutableList<Cat> data = ImmutableList.of(new Cat(1));
         testAdapter.call(data);
+
         assert_().that(testAdapter.items()).isEqualTo(data);
     }
 
@@ -123,6 +124,22 @@ public class ChangesDetectorNewTest {
         swapDataAndCheckIfEquals(
                 ImmutableList.of(new Cat(1), new Cat(2), new Cat(3), new Cat(4)),
                 ImmutableList.of(new Cat(1).withName("krowa"), new Cat(3), new Cat(2), new Cat(4)));
+    }
+
+
+
+    @Test
+    public void testAfterChangeOrderAndDeleteSomeItem_orderAndDeleteAreNotified3() throws Exception {
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(0), new Cat(1), new Cat(2)),
+                ImmutableList.of(new Cat(2), new Cat(0)));
+    }
+
+    @Test
+    public void testAfterChangeOrderAndDeleteSomeItem_orderAndDeleteAreNotified4() throws Exception {
+        swapDataAndCheckIfEquals(
+                ImmutableList.of(new Cat(0), new Cat(1), new Cat(2)),
+                ImmutableList.of(new Cat(2), new Cat(1), new Cat(0)));
     }
 
     private void swapDataAndCheckIfEquals(@Nonnull ImmutableList<Cat> startData, @Nonnull ImmutableList<Cat> newData) {
@@ -220,12 +237,11 @@ public class ChangesDetectorNewTest {
         }
     }
 
-    static class ListGenerator {
+    private static class ListGenerator {
+        final static Random random = new Random();
 
         @Nonnull
         private static List<Cat> generateItems() {
-            final Random random = new Random();
-
             final int itemsCount = randomBetween(random, 10, 30);
             final ArrayList<Cat> items = new ArrayList<>(itemsCount);
             for (int i = 0; i < itemsCount; ++i) {

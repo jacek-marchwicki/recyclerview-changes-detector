@@ -1,0 +1,38 @@
+sudo: false
+language: android
+jdk:
+  - oraclejdk8
+
+# https://github.com/travis-ci/travis-ci/issues/3695
+env:
+  global:
+      MALLOC_ARENA_MAX=2
+
+android:
+  components:
+    - tools
+    - platform-tools
+    - build-tools-25.0.0
+    - android-25
+    - extra-google-m2repository
+    - extra-android-m2repository
+    - sys-img-x86_64-google_apis-25
+  licenses:
+    - '.+'
+
+before_cache:
+  - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock
+
+cache:
+  directories:
+    - $HOME/.gradle/caches/
+    - $HOME/.gradle/wrapper/
+
+before_script:
+  - echo no | android create avd --force --name test --tag google_apis --target android-25 --abi x86_64
+  - emulator -avd test -no-audio -no-window &
+  - android-wait-for-emulator
+  - adb shell input keyevent 82 &
+
+script:
+  - ./gradlew build connectedCheck

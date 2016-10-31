@@ -5,7 +5,7 @@ group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
 
 android {
     compileSdkVersion 25
-    buildToolsVersion "24.0.2"
+    buildToolsVersion "25.0.0"
 
     defaultConfig {
         minSdkVersion 15

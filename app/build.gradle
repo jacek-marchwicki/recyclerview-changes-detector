@@ -9,7 +9,7 @@ android {
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "com.jacekmarchwicki.changesdetector.example.TestsRunner"
     }
     buildTypes {
         release {
@@ -30,6 +30,7 @@ dependencies {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
     androidTestCompile 'com.google.code.findbugs:jsr305:3.0.1'
+    androidTestCompile 'com.linkedin.testbutler:test-butler-library:1.0.1'
 
     testCompile 'junit:junit:4.12'
 }

@@ -1,6 +1,7 @@
 # Recycler View Changes Detector
 
 [![Build Status](https://travis-ci.org/jacek-marchwicki/recyclerview-changes-detector.svg?branch=master)](https://travis-ci.org/jacek-marchwicki/recyclerview-changes-detector)
+[![Jitpack Status](https://jitpack.io/v/jacek-marchwicki/recyclerview-changes-detector.svg)](https://jitpack.io/#jacek-marchwicki/recyclerview-changes-detector)
 
 Library allow to automatically detect changes in your data and call methods:
 - notifyItemRangeInserted()

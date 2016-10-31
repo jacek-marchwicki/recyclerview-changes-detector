@@ -1,4 +1,7 @@
 apply plugin: 'java'
+apply plugin: 'maven'
+
+group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
 
 dependencies {
     compile project(":changes-detector")

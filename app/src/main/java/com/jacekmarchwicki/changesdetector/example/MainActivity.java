@@ -107,9 +107,15 @@ public class MainActivity extends AppCompatActivity {
             }
 
             @Override
-            public void bind(@Nonnull Data item) {
+            public void bind(@Nonnull final Data item) {
                 text.setText(item.name);
                 cardView.setCardBackgroundColor(item.color);
+                text.setOnClickListener(new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+                        System.out.println("Click: " + item);
+                    }
+                });
             }
         }
     }

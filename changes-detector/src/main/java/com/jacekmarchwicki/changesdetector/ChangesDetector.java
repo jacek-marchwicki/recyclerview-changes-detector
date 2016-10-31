@@ -16,8 +16,8 @@
 
 package com.jacekmarchwicki.changesdetector;
 
+import java.util.ArrayList;
 import java.util.Collections;
-import java.util.LinkedList;
 import java.util.List;
 
 import javax.annotation.Nonnull;
@@ -77,13 +77,13 @@ public class ChangesDetector<T, H> {
     }
 
     private int indexOfItem(@Nonnull List<H> list,
+                            int start,
                             @Nonnull H search) {
-        int counter = 0;
-        for (H item : list) {
+        for (int i = start; i < list.size(); i++) {
+            H item = list.get(i);
             if (mDetector.matches(item, search)) {
-                return counter;
+                return i;
             }
-            counter += 1;
         }
         return -1;
     }
@@ -103,48 +103,53 @@ public class ChangesDetector<T, H> {
 
         final H[] list = apply(values);
 
-        final LinkedList<H> objects = new LinkedList<>();
+        final ArrayList<H> objects = new ArrayList<H>(mItems.length);
         Collections.addAll(objects, mItems);
 
         clearState();
 
+        int offset = 0;
         int successPosition = 0;
         for (; successPosition < list.length; ) {
             final H item = list[successPosition];
-            final int i = indexOfItem(objects, item);
+            final int i = indexOfItem(objects, offset, item);
             if (i < 0) {
-                executeAction(adapter, ACTION_INSERT, successPosition);
+                executeAction(adapter, ACTION_INSERT, offset);
+                objects.add(offset, item);
+                offset += 1;
                 successPosition += 1;
-            } else if (i == 0) {
-                if (force || !mDetector.same(item, objects.get(0))) {
-                    executeAction(adapter, ACTION_CHANGED, successPosition);
+            } else if (i == offset) {
+                if (force || !mDetector.same(item, objects.get(offset))) {
+                    executeAction(adapter, ACTION_CHANGED, offset);
                 } else {
-                    executeAction(adapter, ACTION_NONE, successPosition);
+                    executeAction(adapter, ACTION_NONE, -1);
                 }
-                objects.remove(0);
+                offset += 1;
                 successPosition += 1;
             } else {
-                final H first = objects.get(0);
+                final H first = objects.get(offset);
                 if (existInList(list, successPosition + 1, first)) {
-                    executeAction(adapter, ACTION_NONE, successPosition);
+                    executeAction(adapter, ACTION_NONE, -1);
 
-                    // changed order
-                    adapter.notifyItemMoved(i + successPosition, successPosition);
-
+                    adapter.notifyItemMoved(i, offset);
                     if (force || !mDetector.same(item, objects.get(i))) {
-                        executeAction(adapter, ACTION_CHANGED, successPosition);
+                        executeAction(adapter, ACTION_CHANGED, offset);
                     }
-                    objects.remove(0);
+                    objects.add(offset, objects.remove(i));
+//                    Collections.swap(objects, i, offset);
+                    offset += 1;
                     successPosition += 1;
                 } else {
-                    executeAction(adapter, ACTION_REMOVE, successPosition);
+                    executeAction(adapter, ACTION_REMOVE, offset);
                     objects.remove(0);
                 }
             }
         }
-        executeAction(adapter, ACTION_NONE, successPosition);
-        if (objects.size() > 0) {
-            adapter.notifyItemRangeRemoved(successPosition, objects.size());
+        executeAction(adapter, ACTION_NONE, -1);
+
+        final int realSize = objects.size();
+        if (realSize > list.length) {
+            adapter.notifyItemRangeRemoved(offset, realSize - list.length);
             objects.clear();
         }
 

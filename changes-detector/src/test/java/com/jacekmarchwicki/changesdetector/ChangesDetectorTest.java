@@ -171,28 +171,6 @@ public class ChangesDetectorTest {
         verifyNoMoreInteractions(adapter);
     }
 
-    @Test
-    public void testAfterChangeOrderAndDeleteSomeItem_orderAndDeleteAreNotified3() throws Exception {
-        detector.newData(adapter, ImmutableList.of(new Cat(0), new Cat(1), new Cat(2)), false);
-        reset(adapter);
-        detector.newData(adapter, ImmutableList.of(new Cat(2), new Cat(0)), false);
-        final InOrder inOrder = inOrder(adapter);
-        inOrder.verify(adapter).notifyItemMoved(2, 0); // 2, 0, 1
-        inOrder.verify(adapter).notifyItemRangeRemoved(2, 1); //  2, 0
-        verifyNoMoreInteractions(adapter);
-    }
-
-    @Test
-    public void testAfterChangeOrderAndDeleteSomeItem_orderAndDeleteAreNotified4() throws Exception {
-        detector.newData(adapter, ImmutableList.of(new Cat(0), new Cat(1), new Cat(2)), false);
-        reset(adapter);
-        detector.newData(adapter, ImmutableList.of(new Cat(2), new Cat(1), new Cat(0)), false);
-        final InOrder inOrder = inOrder(adapter);
-        inOrder.verify(adapter).notifyItemMoved(2, 0); // 2, 0, 1
-        inOrder.verify(adapter).notifyItemMoved(2, 1); // 2, 1, 0
-        verifyNoMoreInteractions(adapter);
-    }
-
 
     @Test
     public void testAfterInsertAtFirstPlace_firstPlaceIsMarkedAsInserted() throws Exception {

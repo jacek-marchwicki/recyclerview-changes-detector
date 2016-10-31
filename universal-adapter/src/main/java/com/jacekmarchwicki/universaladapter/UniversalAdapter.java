@@ -42,72 +42,72 @@ public class UniversalAdapter extends RecyclerView.Adapter<ViewHolderManager.Bas
 
     /**
      * Usage:
-     * <pre>{@code
+     * <pre><code>
      *   public static class Item implements BaseAdapterItem {
      *
-     *     @Nonnull
+     *     &#64;Nonnull
      *     private final String id;
-     *     @Nullable
+     *     &#64;Nullable
      *     private final String lastMessage;
      *
      *     public ChatsItem(@Nonnull String id,
-     *     @Nullable String lastMessage) {
+     *     &#64;Nullable String lastMessage) {
      *       this.id = id;
      *       this.lastMessage = lastMessage;
      *     }
      *
-     *     @Override
+     *     &#64;Override
      *     public boolean matches(@Nonnull BaseAdapterItem item) {
-     *       return item instanceof Item && Objects.equal(id, ((Item)item).id);
+     *       return item instanceof Item &amp;&amp; Objects.equal(id, ((Item)item).id);
      *     }
      *
-     *     @Override
+     *     &#64;Override
      *     public boolean same(@Nonnull BaseAdapterItem item) {
      *       return equals(item);
      *     }
      *
-     *     @Nonnull
+     *     &#64;Nonnull
      *     public String id() {
      *       return id;
      *     }
      *
-     *     @Nullable
+     *     &#64;Nullable
      *     public String lastMessage() {
      *       return lastMessage;
      *     }
      *
-     *     @Override
+     *     &#64;Override
      *     public boolean equals(Object o) {
      *       if (this == o) return true;
      *       if (!(o instanceof Item)) return false;
      *       final Item chatsItem = (ChatsItem) o;
-     *       return Objects.equal(id, chatsItem.id) &&
+     *       return Objects.equal(id, chatsItem.id) &amp;&amp;
      *       Objects.equal(lastMessage, chatsItem.lastMessage);
      *     }
      *
-     *     @Override
+     *     &#64;Override
      *     public int hashCode() {
      *       return Objects.hashCode(id, lastMessage);
      *     }
      *
-     *     @Override
+     *     &#64;Override
      *     public long adapterId() {
      *       return id.hashCode();
      *     }
      *   }
      *
      *   private static class MyViewHolderManager implements ViewHolderManager {
-     *     @Override
+     *     &#64;Override
      *     public boolean matches(BaseAdapterItem baseAdapterItem) {
      *       return baseAdapterItem instanceof Item;
      *     }
      *
-     *      @Override
+     *     &#64;Override
      *     public BaseViewHolder createViewHolder(ViewGroup parent, LayoutInflater from) {
      *       return new Holder(from.inflate(R.layout.activity_chats_item, parent, false));
      *     }
      *
-     *     public static class Holder extends BaseViewHolder<Item> {
+     *     public static class Holder extends BaseViewHolder&lt;Item&gt; {
      *
      *       private final TextView textView;
      *
@@ -116,7 +116,7 @@ public class UniversalAdapter extends RecyclerView.Adapter<ViewHolderManager.Bas
      *         textView = (TextView) itemView;
      *       }
      *
-     *       @Override
+     *       &#64;Override
      *       public void bind(@Nonnull Item item) {
      *         textView.setText(item.lastMessage());
      *       }
@@ -125,10 +125,10 @@ public class UniversalAdapter extends RecyclerView.Adapter<ViewHolderManager.Bas
      *   }
      *
      *   final UniversalAdapter adapter = new UniversalAdapter(
-     *     ImmutableList.<ViewHolderManager>of(new MyViewHolderManager()));
+     *     ImmutableList.&lt;ViewHolderManager&gt;of(new MyViewHolderManager()));
      *
      *   recyclerView.setAdapter(adapter);
-     * }</pre>
+     * </code></pre>
      *
      * @param managers for inflating views
      */
@@ -183,7 +183,8 @@ public class UniversalAdapter extends RecyclerView.Adapter<ViewHolderManager.Bas
      *
      * @param position of item on the list
      * @return item at position
-     * @throws IndexOutOfBoundsException if location < 0 || location >= getItemCount()
+     * @throws IndexOutOfBoundsException if the position is out of range
+     *    (<tt>position &lt; 0 || index &gt;= getItemCount()</tt>)
      */
     @Nonnull
     public BaseAdapterItem getItemAtPosition(int position) {

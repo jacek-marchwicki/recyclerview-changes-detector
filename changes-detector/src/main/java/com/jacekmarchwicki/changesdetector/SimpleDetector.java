@@ -29,7 +29,6 @@ public class SimpleDetector<T extends SimpleDetector.Detectable<T>> implements C
 
         /**
          * If booth items are the same but can have different content
-         * <p>
          * <p>Usually it means booth items has same id</p>
          *
          * @param item to compare
@@ -39,7 +38,6 @@ public class SimpleDetector<T extends SimpleDetector.Detectable<T>> implements C
 
         /**
          * If booth items has exactly same content
-         * <p>
          * <p>Usually it means booth items has same id, name and other fields</p>
          * <p>If you implemented {@link Object#equals(Object)} you can call
          * {@code this.equals(item)}</p>

@@ -146,6 +146,31 @@ And another data so recycler view will be nice animated:
 adapter.call(Arrays.toList(Data(2, "Dog"), new Data(3, "Cat"), new Data(4, "Elephant"));
 ```
 
+### With auto-value (recommended)
+
+Usage like above with small improvement:
+
+```java
+@AutoValue
+private class Data implements BaseAdapterItem {
+
+    @Nonnull
+    @AdapterId
+    public abstract String id();
+    @Nonnull
+    public abstract String name();
+    public abstract int color();
+
+    public Data create(@Nonull String id, @Nonnull String name, int color) {
+        return AutoValue_Data(id, name, color);
+    }
+
+    // methods equal, adapterId, matches and same will be generated for you
+}
+```
+
+
+For more info look: [AutoValue: BaseAdapterItem Extension](https://github.com/m-zagorski/auto-value-base-adapter-item)
 
 
 ### Without Universal Adapter
@@ -220,7 +245,9 @@ changesDetector.newData(yourAdapter, data, false);
 
 ### More
 
-For more, look on sample app at `app/` directory
+For more:
+- look on sample app at [app/](app/) directory.
+- look on [AutoValue: BaseAdapterItem Extension](https://github.com/m-zagorski/auto-value-base-adapter-item)
 
 
 ## License

@@ -24,7 +24,6 @@ import javax.annotation.Nonnull;
 
 import static com.jacekmarchwicki.changesdetector.internal.Preconditions.checkNotNull;
 
-
 /**
  * Detector for adapter items that can find what was changed and call recycler adapter methods
  *
@@ -96,7 +95,7 @@ public class ChangesDetector<T, H> {
      * @param force   true if you need to force all data reload
      */
     public void newData(@Nonnull ChangesAdapter adapter,
-                        @Nonnull List<T> values,
+                        @Nonnull List<? extends T> values,
                         boolean force) {
         checkNotNull(adapter);
         checkNotNull(values);
@@ -156,7 +155,6 @@ public class ChangesDetector<T, H> {
         mItems = list;
     }
 
-
     private int lastPosition;
     private int count;
     private int lastAction;
@@ -195,7 +193,7 @@ public class ChangesDetector<T, H> {
     }
 
     @Nonnull
-    private H[] apply(@Nonnull List<T> values) {
+    private H[] apply(@Nonnull List<? extends T> values) {
         @SuppressWarnings("unchecked")
         final H[] result = (H[]) new Object[values.size()];
         for (int i = 0; i < values.size(); i++) {
@@ -205,5 +203,4 @@ public class ChangesDetector<T, H> {
 
         return result;
     }
-
 }

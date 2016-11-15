@@ -250,6 +250,11 @@ For more:
 - look on [AutoValue: BaseAdapterItem Extension](https://github.com/m-zagorski/auto-value-base-adapter-item)
 
 
+### Frequently asked questions
+
+[FAQ](FAQ.md)
+
+
 ## License
 
     Copyright [2016] [Jacek Marchwicki <jacek.marchwicki@gmail.com>]

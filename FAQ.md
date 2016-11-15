@@ -396,6 +396,64 @@ public class Data {
 }
 ```
 
+## Bug 6
+
+While using RxJava trying skipping some fields in `equals` can lead to bugs
+
+```java
+public class Data implements SimpleDetector.Detectable<Data> {
+
+    private final long id;
+    @Nonnull
+    private final Observable<String> observable;
+
+    Data(long id, @Nonnull Observable<String> observable) {
+        this.id = id;
+        this.observable = observable;
+    }
+
+    @Override
+    public boolean matches(@Nonnull Data item) {
+        return Objects.equals(item.id, id);
+    }
+
+    public Observable<String> observable() {
+        return observable;
+    }
+
+    @Override
+    public boolean same(@Nonnull Data item) {
+        return equals(item);
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof Data)) return false;
+        final Data data = (Data) o;
+        return Objects.equals(id, data.id);
+    }
+}
+```
+
+So when you type:
+
+```java
+final Observable<String> instance = Observable.just("")
+adapter.call(Arrays.toList(Data(1, instance.observeOn(uiScheduler))), new Data(2, instance.observeOn(uiScheduler)));
+adapter.call(Arrays.toList(Data(1, instance.observeOn(uiScheduler))), new Data(2, instance.observeOn(uiScheduler)));
+```
+
+everything is ok, but when you are going to change value of observable, nothing will be populated
+to `RecyclerView`:
+
+```java
+adapter.call(Arrays.toList(Data(1, instance.observeOn(uiScheduler))), new Data(2, Observable.just("new value").observeOn(uiScheduler)));
+```
+
+So if you would like to be on safe site - include all fields in `matches`.
+
+
 # TIPS
 
-Using AutoValue plugin usually your code will be less potential to bugs.
+Using [Mateusz's AutoValue plugin](https://github.com/m-zagorski/auto-value-base-adapter-item) usually your code will be less potential to bugs.

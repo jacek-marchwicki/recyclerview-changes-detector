@@ -186,7 +186,7 @@ adapter.call(Arrays.toList(Data(1, instance)), new Data(2, instance));
 adapter.call(Arrays.toList(Data(1, instance)), new Data(2, instance));
 ```
 
-## Bug 3
+## Bug #3
 
 This usually can happen when using RxJava
 
@@ -280,7 +280,7 @@ public class Data implements SimpleDetector.Detectable<Data> {
 }
 ```
 
-## Bug 4
+## Bug #4
 
 The same issue can happen without using RxJava:
 
@@ -320,7 +320,7 @@ public class Data implements SimpleDetector.Detectable<Data> {
 This is definitely what you shouldn't do.
 
 
-## Bug 5
+## Bug #5
 
 When using RxJava with adapter (this is not strictly related to `ChangesDetector`) there is one more thing to remember.
 
@@ -396,7 +396,7 @@ public class Data {
 }
 ```
 
-## Bug 6
+## Bug #6
 
 While using RxJava trying skipping some fields in `equals` can lead to bugs
 

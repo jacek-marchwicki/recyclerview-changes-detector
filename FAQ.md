@@ -1,6 +1,6 @@
 # FAQ
 
-ChangesDetector detects changes based on methods `matches` and `same` that you need to implement.
+`ChangesDetector` detects changes based on methods `matches` and `same` that you need to implement.
 If you implement them wrongly this can lead to omitting your changes in recycler view or flooding
 changed to recycler view that was not necessary.
 
@@ -9,9 +9,9 @@ changed to recycler view that was not necessary.
 ## Bug #1
 
 ```java
-private class Data implements SimpleDetector.Detectable<Data> {
+public class Data implements SimpleDetector.Detectable<Data> {
 
-    private final String id;
+    private final long id;
     @Nonnull
     private final String name;
 
@@ -45,7 +45,8 @@ Because your `equals` method doesn't take care of `name`, changing name will not
 You need to change your `equals` method.
 
 ```java
-private class Data {
+public class Data implements SimpleDetector.Detectable<Data> {
+    // ...
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -54,15 +55,16 @@ private class Data {
         return Objects.equals(id, data.id) &&
           Objects.equals(name, data.name); // This was missing
     }
+    // ...
 }
 ```
 
 ## Bug #2
 
 ```java
-private class Data implements SimpleDetector.Detectable<Data> {
+public class Data implements SimpleDetector.Detectable<Data> {
 
-    private final String id;
+    private final long id;
     @Nonnull
     private final Object o;
 
@@ -94,7 +96,7 @@ private class Data implements SimpleDetector.Detectable<Data> {
 
 This code is not buggy but probably you will invoke bug invoking changes detector.
 
-If you execute
+If you execute:
 
 ```java
 adapter.call(Arrays.toList(Data(1, new Object())), new Data(2, new Object()));
@@ -121,9 +123,9 @@ adapter.call(Arrays.toList(Data(1, instance)), new Data(2, instance));
 Similar bug can be done with RxJava
 
 ```java
-private class Data implements SimpleDetector.Detectable<Data> {
+public class Data implements SimpleDetector.Detectable<Data> {
 
-    private final String id;
+    private final long id;
     @Nonnull
     private final Observable<String> observable;
 
@@ -189,9 +191,9 @@ adapter.call(Arrays.toList(Data(1, instance)), new Data(2, instance));
 This usually can happen when using RxJava
 
 ```java
-private class Data implements SimpleDetector.Detectable<Data> {
+public class Data implements SimpleDetector.Detectable<Data> {
 
-    private final String id;
+    private final long id;
     @Nonnull
     private final Observable<String> observable;
 
@@ -225,7 +227,7 @@ private class Data implements SimpleDetector.Detectable<Data> {
 }
 ```
 
-In that case calling
+In this case, calling:
 
 ```java
 final Observable<String> instance = Observable.just("")
@@ -233,14 +235,14 @@ adapter.call(Arrays.toList(Data(1, instance)), new Data(2, instance));
 adapter.call(Arrays.toList(Data(1, instance)), new Data(2, instance));
 ```
 
-`new Data()` will always generate new objects so equals will never be `true`
+`new Data()` will always generate new objects so equals will never be `true`.
 
 You should write your `Data`:
 
 ```java
-private class Data implements SimpleDetector.Detectable<Data> {
+public class Data implements SimpleDetector.Detectable<Data> {
 
-    private final String id;
+    private final long id;
     @Nonnull
     private final Observable<String> observable;
     @Nonnull
@@ -280,12 +282,12 @@ private class Data implements SimpleDetector.Detectable<Data> {
 
 ## Bug 4
 
-The same issue can happen without using RxJava
+The same issue can happen without using RxJava:
 
 ```java
-private class Data implements SimpleDetector.Detectable<Data> {
+public class Data implements SimpleDetector.Detectable<Data> {
 
-    private final String id;
+    private final long id;
     @Nonnull
     private final int value;
 
@@ -315,17 +317,17 @@ private class Data implements SimpleDetector.Detectable<Data> {
 }
 ```
 
-This is definitely what you shouldn't do
+This is definitely what you shouldn't do.
 
 
 ## Bug 5
 
-When using RxJava with adapter (this is not strictly related to ChangesDetector) there is one more thing to remember.
+When using RxJava with adapter (this is not strictly related to `ChangesDetector`) there is one more thing to remember.
 
 ```java
-private class Data implements SimpleDetector.Detectable<Data> {
+public class Data implements SimpleDetector.Detectable<Data> {
 
-    private final String id;
+    private final long id;
     @Nonnull
     private final Observable<String> observable;
     @Nonnull
@@ -363,8 +365,8 @@ private class Data implements SimpleDetector.Detectable<Data> {
 }
 ```
 
-This code actually have some bug. Because RecyclerView recycle it's old items. So in case if we have
-some items
+This code actually have some bug. Because RecyclerView recycle it's old items. So in case when we have
+some items:
 
 ```java
 adapter.call(Arrays.toList(
@@ -373,26 +375,27 @@ adapter.call(Arrays.toList(
     new Data(3, Observable.just("3").delay(1, TimeUnite.SECONDS)),
     new Data(4, Observable.just("4").delay(1, TimeUnite.SECONDS)),
     new Data(5, Observable.just("5").delay(1, TimeUnite.SECONDS))
-    // ....
+    // ...
 ))
 ```
 
 List will be populated correctly and values `["1", "2", "3", "4"]` will be populated after second.
-But after user will scroll something wired happen. We will see `["2", "3", "4", "1"]` and then after
-a second it will change to `["2", "3", "4", "5"]` because `Observable<String> observable()` does not
+But after user will scroll something weird happens. We will see `["2", "3", "4", "1"]` and then, after
+a second, it will change to `["2", "3", "4", "5"]`, because `Observable<String> observable()` does not
 have start value and first item was recycled to populate fifth element.
 
-so you need to change your code to:
+So you need to change your code to:
 
 ```java
-private class Data {
-
+public class Data {
+    // ...
     public Observable<String> observable() {
         return observable.observeOn(uiScheduler).startWith("");
     }
+    // ...
 }
 ```
 
 # TIPS
 
-Using AutoValue plugin usually your code will be less potential to bugs
+Using AutoValue plugin usually your code will be less potential to bugs.

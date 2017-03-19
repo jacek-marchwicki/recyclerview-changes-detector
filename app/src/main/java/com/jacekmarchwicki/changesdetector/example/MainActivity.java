@@ -77,7 +77,6 @@ public class MainActivity extends AppCompatActivity {
                     name.equals(data.name) &&
                     color == data.color;
         }
-
     }
 
     static class DataViewHolder implements ViewHolderManager {
@@ -133,9 +132,8 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Create universal adapter
-        final UniversalAdapter adapter = new UniversalAdapter(Collections.<ViewHolderManager>singletonList(new DataViewHolder()));
+        final UniversalAdapter adapter = new UniversalAdapter(Collections.singletonList(new DataViewHolder()));
         recyclerView.setAdapter(adapter);
-
 
         findViewById(R.id.main_activity_fab)
                 .setOnClickListener(new View.OnClickListener() {
@@ -159,7 +157,7 @@ public class MainActivity extends AppCompatActivity {
                 continue;
             }
             float realHue = hue % 1.0f;
-            final int color = Color.HSVToColor(255, new float[]{realHue * 360, 1.f, 0.5f});
+            final int color = Color.HSVToColor(255, new float[] {realHue * 360, 1.f, 0.5f});
             final String name = randomWithGaussianBoolean(random, 2.0) ? ("item" + i) : ("item" + i + " - changed");
             items.add(new Data(i, name, color));
         }

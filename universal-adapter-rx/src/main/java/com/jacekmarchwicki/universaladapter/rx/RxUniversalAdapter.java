@@ -31,9 +31,9 @@ import rx.functions.Action1;
  * Universal adapter for {@link RecyclerView} that will automatically detect changes designed for
  * rx-java
  */
-public class RxUniversalAdapter extends UniversalAdapter implements Action1<List<BaseAdapterItem>> {
+public class RxUniversalAdapter extends UniversalAdapter implements Action1<List<? extends BaseAdapterItem>> {
 
-    public RxUniversalAdapter(@Nonnull List<ViewHolderManager> managers) {
+    public RxUniversalAdapter(@Nonnull List<? extends ViewHolderManager> managers) {
         super(managers);
     }
 

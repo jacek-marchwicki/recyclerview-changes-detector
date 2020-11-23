@@ -37,9 +37,9 @@ public class UniversalAdapter extends RecyclerView.Adapter<ViewHolderManager.Bas
     private final ChangesDetector<BaseAdapterItem, BaseAdapterItem> changesDetector =
             new ChangesDetector<>(new SimpleDetector<BaseAdapterItem>());
     @Nonnull
-    private final List<ViewHolderManager> managers;
+    private final List<? extends ViewHolderManager> managers;
     @Nonnull
-    private List<BaseAdapterItem> items = Collections.emptyList();
+    private List<? extends BaseAdapterItem> items = Collections.emptyList();
 
     /**
      * Usage:
@@ -133,11 +133,11 @@ public class UniversalAdapter extends RecyclerView.Adapter<ViewHolderManager.Bas
      *
      * @param managers for inflating views
      */
-    public UniversalAdapter(@Nonnull List<ViewHolderManager> managers) {
+    public UniversalAdapter(@Nonnull List<? extends ViewHolderManager> managers) {
         this.managers = managers;
     }
 
-    public void call(@Nonnull List<BaseAdapterItem> baseAdapterItems) {
+    public void call(@Nonnull List<? extends BaseAdapterItem> baseAdapterItems) {
         items = baseAdapterItems;
         changesDetector.newData(this, items, false);
     }
@@ -185,7 +185,7 @@ public class UniversalAdapter extends RecyclerView.Adapter<ViewHolderManager.Bas
      * @param position of item on the list
      * @return item at position
      * @throws IndexOutOfBoundsException if the position is out of range
-     *    (<tt>position &lt; 0 || index &gt;= getItemCount()</tt>)
+     * (<tt>position &lt; 0 || index &gt;= getItemCount()</tt>)
      */
     @Nonnull
     public BaseAdapterItem getItemAtPosition(int position) {

@@ -129,7 +129,7 @@ public class MainActivity extends AppCompatActivity {
         recyclerView.setLayoutManager(layoutManager);
 
         // Create universal adapter
-        final UniversalAdapter adapter = new UniversalAdapter(Collections.<ViewHolderManager>singletonList(new DataViewHolder()));
+        final UniversalAdapter adapter = new UniversalAdapter(Collections.singletonList(new DataViewHolder()));
         recyclerView.setAdapter(adapter);
 
         findViewById(R.id.main_activity_fab)

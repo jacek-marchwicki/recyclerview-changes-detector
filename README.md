@@ -23,16 +23,16 @@ repositories {
 dependencies {
 
     // UniversalAdapter with changes detector with RxJava
-    compile 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter-rx:<look-on-release-tab>'
+    implementation 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter-rx:<look-on-release-tab>'
 
     // UniversalAdapter with changes detector without RxJava
-    compile 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter:<look-on-release-tab>'
+    implementation 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter:<look-on-release-tab>'
 
     // Changes Detector and Adapter items (without Android dependencies)
-    compile 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter-java:<look-on-release-tab>'
+    implementation 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter-java:<look-on-release-tab>'
 
     // Changes Detector (without Android dependencies)
-    compile 'com.github.jacek-marchwicki.recyclerview-changes-detector:changes-detector:<look-on-release-tab>'
+    implementation 'com.github.jacek-marchwicki.recyclerview-changes-detector:changes-detector:<look-on-release-tab>'
 }
 ```
 

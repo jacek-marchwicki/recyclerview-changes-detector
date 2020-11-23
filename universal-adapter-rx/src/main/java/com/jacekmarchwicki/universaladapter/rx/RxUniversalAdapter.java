@@ -15,8 +15,7 @@
  */
 
 package com.jacekmarchwicki.universaladapter.rx;
-
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem;
 import com.jacekmarchwicki.universaladapter.UniversalAdapter;
@@ -32,9 +31,9 @@ import rx.functions.Action1;
  * Universal adapter for {@link RecyclerView} that will automatically detect changes designed for
  * rx-java
  */
-public class RxUniversalAdapter extends UniversalAdapter implements Action1<List<? extends BaseAdapterItem>> {
+public class RxUniversalAdapter extends UniversalAdapter implements Action1<List<BaseAdapterItem>> {
 
-    public RxUniversalAdapter(@Nonnull List<? extends ViewHolderManager> managers) {
+    public RxUniversalAdapter(@Nonnull List<ViewHolderManager> managers) {
         super(managers);
     }
 

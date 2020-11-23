@@ -4,17 +4,17 @@ apply plugin: 'com.github.dcendents.android-maven'
 group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.0"
+    compileSdkVersion 29
+    buildToolsVersion "29.0.3"
 
     defaultConfig {
-        minSdkVersion 9
-        targetSdkVersion 25
+        minSdkVersion 14
+        targetSdkVersion 29
         versionCode 1
         versionName "1.0"
         resourcePrefix "universalapater_"
 
-        testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
+        testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
 
     }
     buildTypes {
@@ -26,20 +26,19 @@ android {
 }
 
 dependencies {
-    compile 'com.android.support:recyclerview-v7:25.0.0'
-    compile 'com.google.code.findbugs:jsr305:3.0.1'
-    compile project(":changes-detector")
-    compile project(":universal-adapter-java")
+    api 'androidx.recyclerview:recyclerview:1.1.0'
+    api 'com.google.code.findbugs:jsr305:3.0.1'
+    api project(":changes-detector")
+    api project(":universal-adapter-java")
 
+    androidTestApi 'androidx.test.espresso:espresso-core:3.3.0'
+    androidTestApi 'androidx.test:runner:1.3.0'
+    androidTestApi 'androidx.test:rules:1.3.0'
 
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-
-    androidTestCompile 'org.mockito:mockito-core:2.0.2-beta'
-    androidTestCompile 'com.google.truth:truth:0.25'
-    androidTestCompile 'com.google.dexmaker:dexmaker:1.0'
-    androidTestCompile 'com.google.dexmaker:dexmaker-mockito:1.0'
+    androidTestApi'org.mockito:mockito-core:2.0.2-beta'
+    androidTestApi 'com.google.truth:truth:0.25'
+    androidTestApi 'com.google.dexmaker:dexmaker:1.0'
+    androidTestApi 'com.google.dexmaker:dexmaker-mockito:1.0'
 }
 
 task sourcesJar(type: Jar) {

@@ -95,7 +95,7 @@ public class ChangesDetector<T, H> {
      * @param force   true if you need to force all data reload
      */
     public void newData(@Nonnull ChangesAdapter adapter,
-                        @Nonnull List<? extends T> values,
+                        @Nonnull List<T> values,
                         boolean force) {
         checkNotNull(adapter);
         checkNotNull(values);
@@ -193,7 +193,7 @@ public class ChangesDetector<T, H> {
     }
 
     @Nonnull
-    private H[] apply(@Nonnull List<? extends T> values) {
+    private H[] apply(@Nonnull List<T> values) {
         @SuppressWarnings("unchecked")
         final H[] result = (H[]) new Object[values.size()];
         for (int i = 0; i < values.size(); i++) {

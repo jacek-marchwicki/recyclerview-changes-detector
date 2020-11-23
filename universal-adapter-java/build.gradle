@@ -4,7 +4,7 @@ apply plugin: 'maven'
 group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
 
 dependencies {
-    compile project(":changes-detector")
+    implementation project(":changes-detector")
 }
 
 sourceCompatibility = "1.7"

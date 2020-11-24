@@ -16,7 +16,6 @@
 
 package com.jacekmarchwicki.changesdetector.example;
 
-import android.graphics.Color;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -26,16 +25,18 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.cardview.widget.CardView;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
+
+import com.jacekmarchwicki.changesdetector.example.utils.Element;
+import com.jacekmarchwicki.changesdetector.example.utils.ItemsGenerator;
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem;
 import com.jacekmarchwicki.universaladapter.UniversalAdapter;
 import com.jacekmarchwicki.universaladapter.ViewHolderManager;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
-import java.util.Random;
 import javax.annotation.Nonnull;
 
-public class MainActivity extends AppCompatActivity {
+public class ChangesDetectorActivity extends AppCompatActivity {
 
     private static class Data implements BaseAdapterItem {
 
@@ -89,7 +90,7 @@ public class MainActivity extends AppCompatActivity {
             return new ViewHolder(inflater.inflate(R.layout.data_item, parent, false));
         }
 
-        private class ViewHolder extends BaseViewHolder<Data> {
+        private static class ViewHolder extends BaseViewHolder<Data> {
 
             @Nonnull
             private final TextView text;
@@ -98,8 +99,8 @@ public class MainActivity extends AppCompatActivity {
 
             ViewHolder(@Nonnull View itemView) {
                 super(itemView);
-                text = (TextView) itemView.findViewById(R.id.data_item_text);
-                cardView = (CardView) itemView.findViewById(R.id.data_item_cardview);
+                text = itemView.findViewById(R.id.data_item_text);
+                cardView = itemView.findViewById(R.id.data_item_cardview);
             }
 
             @Override
@@ -119,9 +120,9 @@ public class MainActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.main_activity);
+        setContentView(R.layout.activity_list);
 
-        final RecyclerView recyclerView = (RecyclerView) findViewById(R.id.main_activity_recycler);
+        final RecyclerView recyclerView = findViewById(R.id.list_activity_recycler);
 
         // Setup layout manager
         final LinearLayoutManager layoutManager = new LinearLayoutManager(this, LinearLayoutManager.VERTICAL, false);
@@ -132,7 +133,7 @@ public class MainActivity extends AppCompatActivity {
         final UniversalAdapter adapter = new UniversalAdapter(Collections.singletonList(new DataViewHolder()));
         recyclerView.setAdapter(adapter);
 
-        findViewById(R.id.main_activity_fab)
+        findViewById(R.id.list_activity_fab)
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
@@ -143,33 +144,11 @@ public class MainActivity extends AppCompatActivity {
 
     @Nonnull
     private static List<BaseAdapterItem> generateItems() {
-        final Random random = new Random();
-
-        float hue = 0.f;
-        final int itemsCount = randomBetween(random, 10, 30);
-        final ArrayList<BaseAdapterItem> items = new ArrayList<>(itemsCount);
-        for (int i = 0; i < itemsCount; ++i) {
-            hue += 0.12345;
-            if (!randomWithGaussianBoolean(random, 2.0)) {
-                continue;
-            }
-            float realHue = hue % 1.0f;
-            final int color = Color.HSVToColor(255, new float[]{realHue * 360, 1.f, 0.5f});
-            final String name = randomWithGaussianBoolean(random, 2.0) ? ("item" + i) : ("item" + i + " - changed");
-            items.add(new Data(i, name, color));
+        List<BaseAdapterItem> adapterItems = new ArrayList<>();
+        List<Element> elements = ItemsGenerator.INSTANCE.generateElements();
+        for (Element element : elements) {
+            adapterItems.add(new Data(element.getId(), element.getName(), element.getColor()));
         }
-
-        final int swapStart = randomBetween(random, 0, items.size() - 2);
-        final int swapEnd = Math.min(items.size() - 1, swapStart + 2);
-        Collections.swap(items, swapStart, swapEnd);
-        return Collections.unmodifiableList(items);
-    }
-
-    private static boolean randomWithGaussianBoolean(@Nonnull Random random, double proablity) {
-        return Math.abs(random.nextGaussian()) < proablity;
-    }
-
-    private static int randomBetween(@Nonnull Random random, int start, int end) {
-        return random.nextInt(end - start) + start;
+        return Collections.unmodifiableList(adapterItems);
     }
 }

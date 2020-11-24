@@ -32,12 +32,12 @@ import static androidx.test.espresso.matcher.ViewMatchers.isDisplayed;
 import static androidx.test.espresso.matcher.ViewMatchers.withId;
 
 @Ignore
-public class MainActivityTest {
+public class ChangesDetectorActivityTest {
 
     @Rule
-    public ActivityTestRule<MainActivity> activityRule
+    public ActivityTestRule<ChangesDetectorActivity> activityRule
             = new ActivityTestRule<>(
-            MainActivity.class,
+            ChangesDetectorActivity.class,
             true,     // initialTouchMode
             false);   // launchActivity. False to customize the intent
 
@@ -46,7 +46,7 @@ public class MainActivityTest {
 
         activityRule.launchActivity(newIntent());
 
-        onView(withId(R.id.main_activity_recycler))
+        onView(withId(R.id.list_activity_recycler))
                 .check(matches(isDisplayed()));
     }
 
@@ -54,16 +54,16 @@ public class MainActivityTest {
     public void clickOnButton_doesNotCrash() {
         activityRule.launchActivity(newIntent());
 
-        onView(withId(R.id.main_activity_fab))
+        onView(withId(R.id.list_activity_fab))
                 .perform(click());
 
-        onView(withId(R.id.main_activity_recycler))
+        onView(withId(R.id.list_activity_recycler))
                 .check(matches(isDisplayed()));
     }
 
     @Nonnull
     private Intent newIntent() {
-        return new Intent(InstrumentationRegistry.getTargetContext(), MainActivity.class);
+        return new Intent(InstrumentationRegistry.getTargetContext(), ChangesDetectorActivity.class);
     }
 
 }

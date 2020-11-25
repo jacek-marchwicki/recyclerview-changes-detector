@@ -18,24 +18,21 @@ package com.jacekmarchwicki.changesdetector.example;
 
 import android.graphics.Color;
 import android.os.Bundle;
-import android.support.v7.app.AppCompatActivity;
-import android.support.v7.widget.CardView;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.TextView;
-
+import androidx.appcompat.app.AppCompatActivity;
+import androidx.cardview.widget.CardView;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem;
 import com.jacekmarchwicki.universaladapter.UniversalAdapter;
 import com.jacekmarchwicki.universaladapter.ViewHolderManager;
-
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Random;
-
 import javax.annotation.Nonnull;
 
 public class MainActivity extends AppCompatActivity {
@@ -157,7 +154,7 @@ public class MainActivity extends AppCompatActivity {
                 continue;
             }
             float realHue = hue % 1.0f;
-            final int color = Color.HSVToColor(255, new float[] {realHue * 360, 1.f, 0.5f});
+            final int color = Color.HSVToColor(255, new float[]{realHue * 360, 1.f, 0.5f});
             final String name = randomWithGaussianBoolean(random, 2.0) ? ("item" + i) : ("item" + i + " - changed");
             items.add(new Data(i, name, color));
         }

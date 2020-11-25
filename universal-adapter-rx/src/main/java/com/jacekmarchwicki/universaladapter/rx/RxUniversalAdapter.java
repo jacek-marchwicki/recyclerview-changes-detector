@@ -15,8 +15,7 @@
  */
 
 package com.jacekmarchwicki.universaladapter.rx;
-
-import android.support.v7.widget.RecyclerView;
+import androidx.recyclerview.widget.RecyclerView;
 
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem;
 import com.jacekmarchwicki.universaladapter.UniversalAdapter;

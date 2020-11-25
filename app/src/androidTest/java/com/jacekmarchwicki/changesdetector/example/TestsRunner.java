@@ -1,6 +1,6 @@
 package com.jacekmarchwicki.changesdetector.example;
 
-import android.support.test.runner.AndroidJUnitRunner;
+import androidx.test.runner.AndroidJUnitRunner;
 
 public class TestsRunner extends AndroidJUnitRunner {
 

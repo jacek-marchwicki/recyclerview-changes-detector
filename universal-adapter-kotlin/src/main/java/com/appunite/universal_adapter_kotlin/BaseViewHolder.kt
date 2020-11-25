@@ -37,7 +37,7 @@ abstract class BaseViewHolder<T : BaseAdapterItem>(itemView: View) :
      * RecyclerView will check the View's transient state again before giving a final decision.
      * Default implementation returns false.
      */
-    fun onFailedToRecycleView(): Boolean {
+    open fun onFailedToRecycleView(): Boolean {
         return false
     }
 
@@ -46,12 +46,12 @@ abstract class BaseViewHolder<T : BaseAdapterItem>(itemView: View) :
      *
      * @see RecyclerView.Adapter.onViewAttachedToWindow
      */
-    fun onViewAttachedToWindow() {}
+    open fun onViewAttachedToWindow() {}
 
     /**
      * Called when a view created by this view holder has been detached from its window.
      *
      * @see RecyclerView.Adapter.onViewDetachedFromWindow
      */
-    fun onViewDetachedFromWindow() {}
+    open fun onViewDetachedFromWindow() {}
 }

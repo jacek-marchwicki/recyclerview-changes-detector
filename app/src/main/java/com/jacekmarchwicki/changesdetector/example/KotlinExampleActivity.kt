@@ -46,7 +46,7 @@ class KotlinExampleActivity : AppCompatActivity() {
     }
 }
 
-class DataViewHolderManager : BaseViewHolderManager<DataItem>(
+class DataViewHolderManager : LayoutViewHolderManager<DataItem>(
         R.layout.data_item, { DataViewHolder(it) }, DataItem::class
 ) {
     class DataViewHolder(view: View) : BaseViewHolder<DataItem>(view) {

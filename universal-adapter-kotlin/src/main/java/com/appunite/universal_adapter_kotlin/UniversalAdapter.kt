@@ -4,6 +4,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
+import androidx.recyclerview.widget.RecyclerView
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
 
 class UniversalAdapter(
@@ -25,6 +26,14 @@ class UniversalAdapter(
         val first = managers.indexOfFirst { manager -> manager.matches(baseAdapterItem) }
         if (first == -1) throw IllegalStateException("No matching manager")
         return first
+    }
+
+    override fun getItemId(position: Int): Long {
+        return if (hasStableIds()) {
+            getItem(position).adapterId()
+        } else {
+            return RecyclerView.NO_ID
+        }
     }
 
     override fun onBindViewHolder(

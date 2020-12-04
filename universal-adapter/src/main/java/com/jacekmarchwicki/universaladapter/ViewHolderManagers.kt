@@ -16,8 +16,8 @@ abstract class BaseViewHolderManager<T : BaseAdapterItem>(
     override fun createViewHolder(
             parent: ViewGroup,
             inflater: LayoutInflater
-    ): ViewHolderManager.BaseViewHolder<BaseAdapterItem> {
-        return viewHolderCreator(createView(parent, inflater)) as ViewHolderManager.BaseViewHolder<BaseAdapterItem>
+    ): ViewHolderManager.BaseViewHolder<out BaseAdapterItem> {
+        return viewHolderCreator(createView(parent, inflater))
     }
 
     override fun matches(baseAdapterItem: BaseAdapterItem): Boolean =

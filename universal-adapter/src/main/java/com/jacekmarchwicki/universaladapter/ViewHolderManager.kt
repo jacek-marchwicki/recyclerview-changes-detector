@@ -36,7 +36,7 @@ interface ViewHolderManager {
      * @param inflater layout inflater
      * @return new [ViewHolderManager.BaseViewHolder]
      */
-    fun createViewHolder(parent: ViewGroup, inflater: LayoutInflater): BaseViewHolder<BaseAdapterItem>
+    fun createViewHolder(parent: ViewGroup, inflater: LayoutInflater): BaseViewHolder<*>
 
     /**
      * ViewHolder for managing view

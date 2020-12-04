@@ -18,6 +18,7 @@ class UniversalAdapter(
     ): ViewHolderManager.BaseViewHolder<BaseAdapterItem> {
         val manager: ViewHolderManager = managers[viewType]
         return manager.createViewHolder(parent, LayoutInflater.from(parent.context))
+                as ViewHolderManager.BaseViewHolder<BaseAdapterItem>
     }
 
     override fun getItemViewType(position: Int): Int {

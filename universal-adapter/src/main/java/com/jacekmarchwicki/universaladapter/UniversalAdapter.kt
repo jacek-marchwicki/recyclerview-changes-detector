@@ -12,6 +12,11 @@ class UniversalAdapter(
         itemDiffCallback
 ) {
 
+    // Added for 1.0 backward compatibility
+    fun call(baseAdapterItems: List<BaseAdapterItem>) {
+        submitList(baseAdapterItems)
+    }
+
     override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int

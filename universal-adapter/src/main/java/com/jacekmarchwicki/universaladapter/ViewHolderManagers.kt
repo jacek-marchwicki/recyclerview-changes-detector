@@ -26,8 +26,8 @@ abstract class BaseViewHolderManager<T : BaseAdapterItem>(
 
 open class LayoutViewHolderManager<T : BaseAdapterItem>(
         @LayoutRes private val layoutRes: Int,
-        viewHolderCreator: (view: View) -> ViewHolderManager.BaseViewHolder<T>,
-        clazz: KClass<out T>
+        clazz: KClass<out T>,
+        viewHolderCreator: (view: View) -> ViewHolderManager.BaseViewHolder<T>
 ) : BaseViewHolderManager<T>(clazz, viewHolderCreator) {
 
     override fun createView(parent: ViewGroup, inflater: LayoutInflater): View {
@@ -41,7 +41,7 @@ object ViewHolderManagerFactory {
             @LayoutRes layoutRes: Int,
             noinline viewHolderCreator: (View) -> ViewHolderManager.BaseViewHolder<T>
     ): ViewHolderManager {
-        return LayoutViewHolderManager(layoutRes, viewHolderCreator, T::class)
+        return LayoutViewHolderManager(layoutRes, T::class, viewHolderCreator)
     }
 
     inline fun <reified T : BaseAdapterItem> create(

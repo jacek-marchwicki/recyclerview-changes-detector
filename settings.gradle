@@ -1,1 +1,1 @@
-include ':app', ':changes-detector', ':universal-adapter', ':universal-adapter-java', ':universal-adapter-rx'
+include ':app', ':universal-adapter', ':universal-adapter-java', ':universal-adapter-rx'

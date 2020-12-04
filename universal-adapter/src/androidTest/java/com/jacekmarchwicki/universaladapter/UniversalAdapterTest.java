@@ -80,7 +80,7 @@ public class UniversalAdapterTest {
         final RecyclerView.AdapterDataObserver observer = mock(RecyclerView.AdapterDataObserver.class);
         adapter.registerAdapterDataObserver(observer);
 
-        adapter.call(Collections.<BaseAdapterItem>singletonList(new Data(1L, "krowa")));
+        adapter.submitList(Collections.<BaseAdapterItem>singletonList(new Data(1L, "krowa")));
 
         verify(observer).onItemRangeInserted(0, 1);
     }

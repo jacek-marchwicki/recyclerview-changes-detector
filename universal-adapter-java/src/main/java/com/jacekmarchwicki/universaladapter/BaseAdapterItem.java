@@ -16,9 +16,8 @@
 
 package com.jacekmarchwicki.universaladapter;
 
-import com.jacekmarchwicki.changesdetector.SimpleDetector;
 
-public interface BaseAdapterItem extends SimpleDetector.Detectable<BaseAdapterItem> {
+public interface BaseAdapterItem {
 
     /**
      * return this id if you don't have any id's
@@ -31,4 +30,24 @@ public interface BaseAdapterItem extends SimpleDetector.Detectable<BaseAdapterIt
      * @return adapter id or {@link #NO_ID}
      */
     long adapterId();
+
+    /**
+     * If both items are the same but can have different content
+     * <p>Usually it means booth items has same id</p>
+     *
+     * @param item to compare
+     * @return true if booth items matches
+     */
+    boolean matches(BaseAdapterItem item);
+
+    /**
+     * If both items has exactly same content
+     * <p>Usually it means both items has same id, name and other fields</p>
+     * <p>If you implemented {@link Object#equals(Object)} you can call
+     * {@code this.equals(item)}</p>
+     *
+     * @param item to compare
+     * @return true if booth items are the same
+     */
+    boolean same(BaseAdapterItem item);
 }

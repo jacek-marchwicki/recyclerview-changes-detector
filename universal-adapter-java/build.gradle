@@ -3,10 +3,6 @@ apply plugin: 'maven'
 
 group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
 
-dependencies {
-    implementation project(":changes-detector")
-}
-
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 

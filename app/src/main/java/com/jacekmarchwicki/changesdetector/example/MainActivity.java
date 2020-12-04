@@ -136,7 +136,7 @@ public class MainActivity extends AppCompatActivity {
                 .setOnClickListener(new View.OnClickListener() {
                     @Override
                     public void onClick(View view) {
-                        adapter.call(generateItems());
+                        adapter.submitList(generateItems());
                     }
                 });
     }

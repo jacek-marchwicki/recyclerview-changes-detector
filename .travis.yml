@@ -12,8 +12,8 @@ android:
   components:
     - tools
     - platform-tools
-    - build-tools-25.0.0
-    - android-25
+    - build-tools-29.0.3
+    - android-29
     - extra-google-m2repository
     - extra-android-m2repository
     - android-24
@@ -22,7 +22,7 @@ android:
     - '.+'
 
 before_install:
-  - yes | sdkmanager --licenses
+  - yes | sdkmanager "platforms;android-29"
 
 before_cache:
   - rm -f $HOME/.gradle/caches/modules-2/modules-2.lock

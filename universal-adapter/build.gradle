@@ -1,5 +1,6 @@
 apply plugin: 'com.android.library'
 apply plugin: 'com.github.dcendents.android-maven'
+apply plugin: 'kotlin-android'
 
 group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
 
@@ -28,7 +29,7 @@ android {
 dependencies {
     api 'androidx.recyclerview:recyclerview:1.1.0'
     api 'com.google.code.findbugs:jsr305:3.0.1'
-    api project(":changes-detector")
+    api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
     api project(":universal-adapter-java")
 
     androidTestApi 'androidx.test.espresso:espresso-core:3.3.0'
@@ -46,20 +47,6 @@ task sourcesJar(type: Jar) {
     classifier = 'sources'
 }
 
-task javadoc(type: Javadoc) {
-    source = android.sourceSets.main.java.sourceFiles
-    source += file("$buildDir/generated/source/buildConfig/debug")
-    classpath += project.files(android.getBootClasspath().join(File.pathSeparator))
-    classpath += configurations.compile
-    classpath += fileTree(dir: "$buildDir/intermediates/exploded-aar/", include:"**/classes.jar")
-}
-
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
 artifacts {
     archives sourcesJar
-    archives javadocJar
 }

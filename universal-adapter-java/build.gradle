@@ -3,10 +3,6 @@ apply plugin: 'maven'
 
 group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
 
-dependencies {
-    implementation project(":changes-detector")
-}
-
 sourceCompatibility = "1.7"
 targetCompatibility = "1.7"
 
@@ -15,12 +11,6 @@ task sourcesJar(type: Jar, dependsOn: classes ) {
     from sourceSets.main.allJava
 }
 
-task javadocJar(type: Jar, dependsOn: javadoc) {
-    classifier = 'javadoc'
-    from javadoc.destinationDir
-}
-
 artifacts {
     archives sourcesJar
-    archives javadocJar
 }

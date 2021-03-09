@@ -22,7 +22,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 
-class UniversalAdapter(
+open class UniversalAdapter(
         private val managers: List<ViewHolderManager>
 ) : ListAdapter<BaseAdapterItem, ViewHolderManager.BaseViewHolder<BaseAdapterItem>>(
         itemDiffCallback

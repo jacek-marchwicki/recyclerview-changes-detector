@@ -30,7 +30,6 @@ dependencies {
     api 'androidx.recyclerview:recyclerview:1.1.0'
     api 'com.google.code.findbugs:jsr305:3.0.1'
     api "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    api project(":universal-adapter-java")
 
     androidTestApi 'androidx.test.espresso:espresso-core:3.3.0'
     androidTestApi 'androidx.test:runner:1.3.0'

@@ -13,41 +13,43 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.jacekmarchwicki.universaladapter
 
-package com.jacekmarchwicki.universaladapter;
-
-
-public interface BaseAdapterItem {
-
+interface BaseAdapterItem {
     /**
-     * return this id if you don't have any id's
-     */
-    long NO_ID = -1;
-
-    /**
-     * Unique adapter id or {@link #NO_ID}
+     * Unique adapter id or [BaseAdapterItem.NO_ID]
      *
-     * @return adapter id or {@link #NO_ID}
+     * @return adapter id or [BaseAdapterItem.NO_ID]
      */
-    long adapterId();
+    fun adapterId(): Long
 
     /**
      * If both items are the same but can have different content
-     * <p>Usually it means booth items has same id</p>
+     *
+     * Usually it means that both items have the same id
      *
      * @param item to compare
-     * @return true if booth items matches
+     * @return true if both items matches
      */
-    boolean matches(BaseAdapterItem item);
+    fun matches(item: BaseAdapterItem): Boolean
 
     /**
-     * If both items has exactly same content
-     * <p>Usually it means both items has same id, name and other fields</p>
-     * <p>If you implemented {@link Object#equals(Object)} you can call
-     * {@code this.equals(item)}</p>
+     * If both items have exactly the same content
+     *
+     * Usually it means both items have the same id, name and other fields
+     *
+     * If you implemented [Any.equals] you can call
+     * `this.equals(item)`
      *
      * @param item to compare
      * @return true if booth items are the same
      */
-    boolean same(BaseAdapterItem item);
+    fun same(item: BaseAdapterItem): Boolean
+
+    companion object {
+        /**
+         * return this id if you don't have any id's
+         */
+        const val NO_ID: Long = -1
+    }
 }

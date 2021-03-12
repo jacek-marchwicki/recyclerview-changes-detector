@@ -4,28 +4,25 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
-    android:padding="2dp">
+    android:background="?selectableItemBackground">
 
     <androidx.cardview.widget.CardView
-        android:id="@+id/data_item_cardview"
+        android:id="@+id/item_song_card"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:cardBackgroundColor="#f00"
+        app:cardUseCompatPadding="true"
         app:cardCornerRadius="4dp"
         app:cardElevation="4dp">
 
-
         <TextView
-            android:id="@+id/data_item_text"
+            android:id="@+id/item_song_title"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:orientation="vertical"
             android:padding="16dp"
             android:textColor="#c1000000"
             android:textSize="16sp"
-            tools:text="ASdfasdf asdfasdf aklsdfj ">
-
-        </TextView>
+            tools:text="ASdfasdf asdfasdf aklsdfj "/>
 
     </androidx.cardview.widget.CardView>
 </FrameLayout>

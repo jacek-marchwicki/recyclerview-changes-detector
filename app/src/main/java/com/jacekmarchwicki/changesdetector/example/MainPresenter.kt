@@ -16,46 +16,38 @@
 
 package com.jacekmarchwicki.changesdetector.example
 
-import android.graphics.Color
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
-import java.util.*
-import kotlin.math.min
+import kotlin.random.Random
 
-class MainPresenter {
+class MainPresenter(private val view: MainView) {
+
+    interface MainView {
+        fun onSongClicked(id: String)
+    }
 
     fun getItems(): List<BaseAdapterItem> {
-        val random = Random()
-        var hue = 0f
-        val itemsCount = randomBetween(random, 10, 30)
-        val items = mutableListOf<BaseAdapterItem>()
-        for (i in 0 until itemsCount) {
-            hue += 0.12345f
-            if (!randomWithGaussianBoolean(random, 2.0)) {
-                continue
+        val albumsCount = Random.nextInt(2, 4)
+        return mutableListOf<BaseAdapterItem>().apply {
+            repeat(albumsCount) { index ->
+                val songs = getSongsForAlbum()
+                add(HeaderItem("Album $index", songsCount = songs.size, itemId = index))
+                addAll(songs)
             }
-            val realHue = hue % 1.0f
-            val color = Color.HSVToColor(255, floatArrayOf(realHue * 360, 1f, 0.5f))
-            val name = if (randomWithGaussianBoolean(random, 2.0)) "item$i" else "item$i - changed"
-            items.add(DataItem(i.toLong(), name, color))
-        }
-        val swapStart = randomBetween(random, 0, items.size - 2)
-        val swapEnd = min(items.size - 1, swapStart + 2)
-        Collections.swap(items, swapStart, swapEnd)
-
-        items.add(0, HeaderItem("Header 0"))
-        val secondPosition = itemsCount / 3
-        items.add(secondPosition, HeaderItem("Header $secondPosition"))
-        val thirdPosition = itemsCount / 2
-        items.add(thirdPosition, HeaderItem("Header $thirdPosition"))
-
-        return items.toList()
+            add(FooterItem())
+        }.toList()
     }
 
-    private fun randomWithGaussianBoolean(random: Random, proablity: Double): Boolean {
-        return Math.abs(random.nextGaussian()) < proablity
+    private fun getSongsForAlbum(): List<BaseAdapterItem> {
+        val songsCount = Random.nextInt(1, 4)
+        return mutableListOf<BaseAdapterItem>().apply {
+            repeat(songsCount) { index ->
+                add(SongItem(index.toString(), "Song $index",
+                    itemId = index, onSongClick = ::onSongClick, imageUrl = "url"))
+            }
+        }.toList()
     }
 
-    private fun randomBetween(random: Random, start: Int, end: Int): Int {
-        return random.nextInt(end - start) + start
+    private fun onSongClick(id: String) {
+        view.onSongClicked(id)
     }
 }

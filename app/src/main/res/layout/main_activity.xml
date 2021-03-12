@@ -22,6 +22,7 @@
         android:layout_height="wrap_content"
         android:layout_gravity="end|bottom"
         android:src="@drawable/ic_switch_arrows_white_24dp"
+        app:useCompatPadding="true"
         app:elevation="4dp"
         app:fabSize="normal" />
 </FrameLayout>

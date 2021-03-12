@@ -158,11 +158,11 @@ viewModel.adapterItems.subscribe(adapter)
 If you use androidx.recyclerview version <= 1.1.0 then you have to `override LayoutManager.supportsPredictiveItemAnimations`
 and return false.
 ```kotlin
-    layoutManager = object : LinearLayoutManager(context, RecyclerView.VERTICAL, false) {
-        override fun supportsPredictiveItemAnimations(): Boolean {
-                return false
-            }
+layoutManager = object : LinearLayoutManager(context, RecyclerView.VERTICAL, false) {
+    override fun supportsPredictiveItemAnimations(): Boolean {
+            return false
         }
+    }
 }
 ```
 

@@ -7,7 +7,7 @@
 
 Library simplifies creation of RecyclerView's Adapter:
 - Less boilerplate. No need to implement `onCreateViewHolder`, `getItemViewType`, `onBindViewHolder`, `getItemId`
-- Out of the box DiffUtil support. You don't have to implement the `DiffUtil.ItemCallback()`  anymore.
+- Out of the box DiffUtil support. You don't have to implement the `DiffUtil.ItemCallback()` anymore.
 - Plug and play data models and view holders
 - Cleaner tests
 - RX support
@@ -43,7 +43,7 @@ data class Footer(override val itemId: Any = NO_ID) : DefaultAdapterItem()
 
 ```
 
-- Implement a holder for each data model to bind its data to the view. You have to specify item layout id and data model class.
+- Implement a view holder for each data model to bind its data to the view. You have to specify item layout id and data model class.
 
 ```kotlin
 class HeaderViewHolder : LayoutViewHolderManager<HeaderItem>(
@@ -78,7 +78,7 @@ class FooterViewHolder : LayoutViewHolderManager<FooterItem>(
 
 ```
 
-- Setup adapter and bind data:
+- Setup the adapter and bind data:
 
 ```kotlin
 val adapter = UniversalAdapter(listOf(headerViewHolder, songViewHolder, footerViewHolder))
@@ -102,14 +102,14 @@ Let's have a look at the example below:
 data class SongItem(val id: String, val title: String, override val itemId: Any = id) : DefaultAdapterItem()
 ```
 - `itemId` is required to identify specific element in the list. In this case it is the song id as it is unique to the song. This is being used in the `DiffUtil.ItemCallback.areItemsTheSame()` method.
-- `SongItem` is a Kotlin data class so it overrides `equals` and `hashCode` by default. If you'd like to alter this behaviour you can override `equals` and `hashCode` methods on your own. This is being used in the `DiffUtil.ItemCallback.areContentsTheSame()` method to identify whether element's content changed and need to be updated.
+- `SongItem` is a Kotlin data class so it overrides `equals` and `hashCode` by default. This is being used in the `DiffUtil.ItemCallback.areContentsTheSame()` method to identify whether element's content changed and need to be updated. If you'd like to alter this behaviour you can override `equals` and `hashCode` methods on your own.
 
 ## Plug and play data models and view holders
 As your models and view holders are not bound to any adapter, you can reuse them in every adapter.
 You don't have to specify the `itemViewType` in each adapter, just pass you view holder to adapter's constructor.
 
 ## Cleaner tests
-As your data models and being created in a ViewModel/Presenter, your test logic is very clean and simple
+As your data models are being created in a ViewModel/Presenter, your test logic is very clean and simple
 
 ```kotlin
 @Test
@@ -146,15 +146,9 @@ viewModel.adapterItems.subscribe(adapter)
 ```
 
 
-
 ### More
 
 For more look at the sample app at [app/](app/) directory.
-
-
-### Frequently asked questions
-
-[FAQ](FAQ.md)
 
 
 ## License

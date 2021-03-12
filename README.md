@@ -154,6 +154,17 @@ fun `when 2 of 4 registered students are attendees then student items correctly 
 viewModel.adapterItems.subscribe(adapter)
 ```
 
+## Known issues
+If you use androidx.recyclerview version <= 1.1.0 then you have to `override LayoutManager.supportsPredictiveItemAnimations`
+and return false.
+```kotlin
+    layoutManager = object : LinearLayoutManager(context, RecyclerView.VERTICAL, false) {
+        override fun supportsPredictiveItemAnimations(): Boolean {
+                return false
+            }
+        }
+}
+```
 
 ### More
 

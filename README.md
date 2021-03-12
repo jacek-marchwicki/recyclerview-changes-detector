@@ -5,12 +5,12 @@
 [![Build Status](https://travis-ci.org/jacek-marchwicki/recyclerview-changes-detector.svg?branch=master)](https://travis-ci.org/jacek-marchwicki/recyclerview-changes-detector)
 [![Jitpack Status](https://jitpack.io/v/jacek-marchwicki/recyclerview-changes-detector.svg)](https://jitpack.io/#jacek-marchwicki/recyclerview-changes-detector)
 
-Library simplifies creation of RecyclerView's Adapter:
+Lightweight library that simplifies creation of RecyclerView's Adapter:
 - Less boilerplate. No need to implement `onCreateViewHolder`, `getItemViewType`, `onBindViewHolder`, `getItemId`
 - Out of the box DiffUtil support. You don't have to implement the `DiffUtil.ItemCallback()` anymore.
 - Plug and play data models and view holders
 - Cleaner tests
-- RX support
+- RX support (optional)
 
 ## How it looks
 
@@ -32,14 +32,16 @@ dependencies {
 
 ## How to use
 
-Let's assume that your list consits of a header, songs and footer.
+Let's assume that your list consits of headers, songs and a footer.
 
 - Implement data models for all list elements
 
 ```kotlin
 data class HeaderItem(val text: String, val songsCount: Int, override val itemId: Any = text) : DefaultAdapterItem()
+
 data class SongItem(val id: String, val title: String, val imageUrl: String, override val itemId: Any = id, val onSongClick: (id: String) -> Unit) : DefaultAdapterItem()
-data class Footer(override val itemId: Any = NO_ID) : DefaultAdapterItem()
+
+data class FooterItem(override val itemId: Any = NO_ID) : DefaultAdapterItem()
 
 ```
 
@@ -84,8 +86,15 @@ class FooterViewHolder : LayoutViewHolderManager<FooterItem>(
 val adapter = UniversalAdapter(listOf(headerViewHolder, songViewHolder, footerViewHolder))
 recyclerView.adapter = adapter
 
-// Whenever new data are applied, the RecyclerView is nicely animated
-viewModel.adapterItems.subscribe { adapter.submitList(it) }
+// You'd rather create the items in a ViewModel/Presenter
+adapter.submitList(listOf(
+  HeaderItem(text="Album1"),
+  Song(id="1", title="Song1"),
+  Song(id="2", title="Song2"),
+  HeaderItem(text="Album2"),
+  Song(id="3", title="Song1"),
+  FooterItem(),
+));
 ```
 
 ## DiffUtil support

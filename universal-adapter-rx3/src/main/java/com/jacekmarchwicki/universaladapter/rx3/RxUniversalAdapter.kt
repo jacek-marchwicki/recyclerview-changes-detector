@@ -13,25 +13,18 @@
  * License for the specific language governing permissions and limitations under
  * the License.
  */
+package com.jacekmarchwicki.universaladapter.rx3
 
-package com.jacekmarchwicki.universaladapter.rx;
+import com.jacekmarchwicki.universaladapter.BaseAdapterItem
+import com.jacekmarchwicki.universaladapter.UniversalAdapter
+import com.jacekmarchwicki.universaladapter.ViewHolderManager
+import io.reactivex.rxjava3.functions.Consumer
 
-import com.jacekmarchwicki.universaladapter.ViewHolderManager;
+class RxUniversalAdapter(
+    managers: List<ViewHolderManager>
+) : UniversalAdapter(managers), Consumer<List<BaseAdapterItem>> {
 
-import org.junit.Test;
-
-import java.util.Collections;
-
-import rx.functions.Action1;
-
-import static com.google.common.truth.Truth.assert_;
-
-public class RxUniversalAdapterTest {
-
-    @Test
-    public void universalAdapter_shouldExtendAction() throws Exception {
-        final RxUniversalAdapter rxUniversalAdapter = new RxUniversalAdapter(Collections.<ViewHolderManager>emptyList());
-
-        assert_().that(rxUniversalAdapter).isInstanceOf(Action1.class);
+    override fun accept(items: List<BaseAdapterItem>) {
+        submitList(items)
     }
 }

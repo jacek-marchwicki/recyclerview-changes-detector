@@ -157,7 +157,7 @@ viewModel.adapterItems.subscribe(adapter)
 ```
 You just have to use the `RxUniversalAdapter` class instead of regular `UniversalAdapter`.
 
-You can also use the `RxViewHolder` that unsubscribes from your streams when RecyclerView elements are being recycled.
+You can also use the `BaseRxViewHolder` class that unsubscribes from your streams when RecyclerView elements are being recycled.
 That way you don't have to remember about unsubscribing. Here is the sample code that demonstrates that:
 
 ```kotlin

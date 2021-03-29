@@ -42,7 +42,7 @@ package com.jacekmarchwicki.universaladapter
  * would be different for [BaseAdapterItem.same()] method if we didn't wrap it in the Fixed object.
  * That would cause RecyclerView to re-bind the element which content in fact didn't change.
  */
-class Fixed<T>(val data: T?) {
+class Fixed<T>(val property: T?) {
 
     override fun equals(other: Any?): Boolean = true
 

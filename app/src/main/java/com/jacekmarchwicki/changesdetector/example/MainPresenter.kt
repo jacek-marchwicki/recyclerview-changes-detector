@@ -17,7 +17,6 @@
 package com.jacekmarchwicki.changesdetector.example
 
 import com.jacekmarchwicki.universaladapter.BaseAdapterItem
-import io.reactivex.rxjava3.core.Observable
 import kotlin.random.Random
 
 class MainPresenter(private val view: MainView) {
@@ -37,8 +36,6 @@ class MainPresenter(private val view: MainView) {
             add(FooterItem())
         }.toList()
     }
-
-    fun getItemsObservable(): Observable<List<BaseAdapterItem>> = Observable.just(getItems())
 
     private fun getSongsForAlbum(): List<BaseAdapterItem> {
         val songsCount = Random.nextInt(1, 4)

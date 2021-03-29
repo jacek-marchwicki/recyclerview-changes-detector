@@ -9,14 +9,14 @@ object ViewHolderManagerFactory {
 
     inline fun <reified T : BaseAdapterItem> create(
         @LayoutRes layoutRes: Int,
-        noinline viewHolderCreator: (View) -> ViewHolderManager.BaseViewHolder<T>
+        noinline viewHolderCreator: (View) -> BaseViewHolder<T>
     ): ViewHolderManager {
         return LayoutViewHolderManager(layoutRes, T::class, viewHolderCreator)
     }
 
     inline fun <reified T : BaseAdapterItem> create(
         crossinline createView: (parent: ViewGroup, inflater: LayoutInflater) -> View,
-        noinline viewHolderCreator: (View) -> ViewHolderManager.BaseViewHolder<T>
+        noinline viewHolderCreator: (View) -> BaseViewHolder<T>
     ): ViewHolderManager {
         return object : BaseViewHolderManager<T>(T::class, viewHolderCreator) {
             override fun createView(parent: ViewGroup, inflater: LayoutInflater): View {

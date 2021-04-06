@@ -51,7 +51,7 @@ data class FooterItem(override val itemId: Any = NO_ID) : DefaultAdapterItem()
 class HeaderViewHolder : LayoutViewHolderManager<HeaderItem>(
     R.layout.item_header, HeaderItem::class, { HeaderViewHolder(it) }
 ) {
-    class HeaderViewHolder(itemView: View) : ViewHolderManager.BaseViewHolder<HeaderItem>(itemView) {
+    class HeaderViewHolder(itemView: View) : BaseViewHolder<HeaderItem>(itemView) {
         override fun bind(item: HeaderItem) {
             itemView.item_header_tv.text = "${item.text} - ${item.songsCount}" 
         }
@@ -61,7 +61,7 @@ class HeaderViewHolder : LayoutViewHolderManager<HeaderItem>(
 class SongViewHolder(val imageLoader: ImageLoader) : LayoutViewHolderManager<SongItem>(
     R.layout.song_item, SongItem::class, { ViewHolder(it) }
 ) {
-    class ViewHolder(itemView: View) : ViewHolderManager.BaseViewHolder<SongItem>(itemView) {
+    class ViewHolder(itemView: View) : BaseViewHolder<SongItem>(itemView) {
         override fun bind(item: SongItem) {
             itemView.song_item.text = item.title
             itemView.setOnClickListener { item.onSongClick(item.id) }
@@ -73,7 +73,7 @@ class SongViewHolder(val imageLoader: ImageLoader) : LayoutViewHolderManager<Son
 class FooterViewHolder : LayoutViewHolderManager<FooterItem>(
     R.layout.item_footer, FooterItem::class, { ViewHolder(it) }
 ) {
-    class ViewHolder(itemView: View) : ViewHolderManager.BaseViewHolder<FooterItem>(itemView) {
+    class ViewHolder(itemView: View) : BaseViewHolder<FooterItem>(itemView) {
         override fun bind(item: FooterItem) {}
     }
 }

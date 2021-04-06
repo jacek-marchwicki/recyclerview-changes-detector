@@ -24,7 +24,7 @@ import kotlin.reflect.KClass
 
 abstract class BaseViewHolderManager<T : BaseAdapterItem>(
         private val clazz: KClass<out T>,
-        private val viewHolderCreator: (view: View) -> ViewHolderManager.BaseViewHolder<T>,
+        private val viewHolderCreator: (view: View) -> BaseViewHolder<T>,
 ) : ViewHolderManager {
 
     abstract fun createView(parent: ViewGroup, inflater: LayoutInflater): View
@@ -32,7 +32,7 @@ abstract class BaseViewHolderManager<T : BaseAdapterItem>(
     override fun createViewHolder(
             parent: ViewGroup,
             inflater: LayoutInflater
-    ): ViewHolderManager.BaseViewHolder<out BaseAdapterItem> {
+    ): BaseViewHolder<out BaseAdapterItem> {
         return viewHolderCreator(createView(parent, inflater))
     }
 
@@ -43,7 +43,7 @@ abstract class BaseViewHolderManager<T : BaseAdapterItem>(
 open class LayoutViewHolderManager<T : BaseAdapterItem>(
         @LayoutRes private val layoutRes: Int,
         clazz: KClass<out T>,
-        viewHolderCreator: (view: View) -> ViewHolderManager.BaseViewHolder<T>
+        viewHolderCreator: (view: View) -> BaseViewHolder<T>
 ) : BaseViewHolderManager<T>(clazz, viewHolderCreator) {
 
     override fun createView(parent: ViewGroup, inflater: LayoutInflater): View {

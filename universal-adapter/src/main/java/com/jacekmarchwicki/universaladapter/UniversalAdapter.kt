@@ -24,7 +24,7 @@ import androidx.recyclerview.widget.RecyclerView
 
 open class UniversalAdapter(
         private val managers: List<ViewHolderManager>
-) : ListAdapter<BaseAdapterItem, ViewHolderManager.BaseViewHolder<BaseAdapterItem>>(
+) : ListAdapter<BaseAdapterItem, BaseViewHolder<BaseAdapterItem>>(
         itemDiffCallback
 ) {
 
@@ -36,10 +36,10 @@ open class UniversalAdapter(
     override fun onCreateViewHolder(
             parent: ViewGroup,
             viewType: Int
-    ): ViewHolderManager.BaseViewHolder<BaseAdapterItem> {
+    ): BaseViewHolder<BaseAdapterItem> {
         val manager: ViewHolderManager = managers[viewType]
         return manager.createViewHolder(parent, LayoutInflater.from(parent.context))
-                as ViewHolderManager.BaseViewHolder<BaseAdapterItem>
+                as BaseViewHolder<BaseAdapterItem>
     }
 
     override fun getItemViewType(position: Int): Int {
@@ -58,25 +58,25 @@ open class UniversalAdapter(
     }
 
     override fun onBindViewHolder(
-            holder: ViewHolderManager.BaseViewHolder<BaseAdapterItem>,
+            holder: BaseViewHolder<BaseAdapterItem>,
             position: Int
     ) = holder.bind(currentList[position])
 
-    override fun onFailedToRecycleView(holder: ViewHolderManager.BaseViewHolder<BaseAdapterItem>): Boolean {
+    override fun onFailedToRecycleView(holder: BaseViewHolder<BaseAdapterItem>): Boolean {
         return holder.onFailedToRecycleView()
     }
 
-    override fun onViewAttachedToWindow(holder: ViewHolderManager.BaseViewHolder<BaseAdapterItem>) {
+    override fun onViewAttachedToWindow(holder: BaseViewHolder<BaseAdapterItem>) {
         super.onViewAttachedToWindow(holder)
         holder.onViewAttachedToWindow()
     }
 
-    override fun onViewDetachedFromWindow(holder: ViewHolderManager.BaseViewHolder<BaseAdapterItem>) {
+    override fun onViewDetachedFromWindow(holder: BaseViewHolder<BaseAdapterItem>) {
         super.onViewDetachedFromWindow(holder)
         holder.onViewDetachedFromWindow()
     }
 
-    override fun onViewRecycled(holder: ViewHolderManager.BaseViewHolder<BaseAdapterItem>) {
+    override fun onViewRecycled(holder: BaseViewHolder<BaseAdapterItem>) {
         holder.onViewRecycled()
         super.onViewRecycled(holder)
     }

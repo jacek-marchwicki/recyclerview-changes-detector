@@ -20,6 +20,8 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 
+typealias BaseViewHolder<T> = ViewHolderManager.BaseViewHolder<T>
+
 /**
  * Manager that managing of creation [ViewHolderManager.BaseViewHolder]
  */

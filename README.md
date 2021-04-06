@@ -27,6 +27,8 @@ dependencies {
     implementation 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter:<look-on-release-tab>'
     // RX support
     implementation 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter-rx:<look-on-release-tab>'
+    implementation 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter-rx2:<look-on-release-tab>'
+    implementation 'com.github.jacek-marchwicki.recyclerview-changes-detector:universal-adapter-rx3:<look-on-release-tab>'
 }
 ```
 
@@ -149,9 +151,38 @@ fun `when 2 of 4 registered students are attendees then student items correctly 
 ```
 
 ## RX support
-`universal-adapter-rx` module lets you subscribe directly to adapter like this:
+`universal-adapter-rx[x]` modules lets you subscribe directly to adapter like this:
 ```kotlin
 viewModel.adapterItems.subscribe(adapter)
+```
+You just have to use the `RxUniversalAdapter` class instead of regular `UniversalAdapter`.
+
+You can also use the `BaseRxViewHolder` class that unsubscribes from your streams when RecyclerView elements are being recycled.
+That way you don't have to remember about unsubscribing. Here is the sample code that demonstrates that:
+
+```kotlin
+class SongViewHolder(private val imageLoader: ImageLoader) : LayoutViewHolderManager<SongItem>(
+    R.layout.item_song, SongItem::class, { ViewHolder(it, imageLoader) }
+) {
+    class ViewHolder(itemView: View, private val imageLoader: ImageLoader) : BaseRxViewHolder<SongItem>(itemView) {
+
+        // Here you bind all your streams
+        override fun bindStreams(item: SongItem): Disposable = CompositeDisposable(
+            item.isFavorite.subscribe { favorite ->
+                itemView.fav_iv.alpha = if (favorite) 1f else 0f
+            },
+            itemView.clicks().subscribe {
+                item.onSongClick(item.id)
+            }
+        )
+
+        // Here you bind your regular data
+        override fun bindData(item: SongItem) {
+            itemView.item_song_title.text = item.title
+            imageLoader.load(item.imageUrl).into(itemView.item_song_card)
+        }
+    }
+}
 ```
 
 ## Known issues

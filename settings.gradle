@@ -1,1 +1,1 @@
-include ':app', ':universal-adapter', ':universal-adapter-rx'
+include ':app', ':universal-adapter', ':universal-adapter-rx', ':universal-adapter-rx2', ':universal-adapter-rx3'

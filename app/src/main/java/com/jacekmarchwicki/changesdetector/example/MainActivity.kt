@@ -22,6 +22,8 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jacekmarchwicki.universaladapter.*
+import com.jacekmarchwicki.universaladapter.items.NoDataAdapterItem
+import com.jacekmarchwicki.universaladapter.managers.NoDataViewHolderManager
 import kotlinx.android.synthetic.main.item_header.view.*
 import kotlinx.android.synthetic.main.item_song.view.*
 import kotlinx.android.synthetic.main.main_activity.*
@@ -47,7 +49,9 @@ class MainActivity : AppCompatActivity(), MainPresenter.MainView {
         }
 
         val adapter = UniversalAdapter(listOf(
-            SongViewHolder(ImageLoader()), HeaderViewHolder(), FooterViewHolder())
+            SongViewHolder(ImageLoader()),
+            HeaderViewHolder(),
+            NoDataViewHolderManager(R.layout.item_footer))
         )
         recyclerView.adapter = adapter
 
@@ -70,7 +74,7 @@ data class SongItem(
     val onSongClick: (id: String) -> Unit
 ) : DefaultAdapterItem()
 
-data class FooterItem(override val itemId: Any = BaseAdapterItem.NO_ID) : DefaultAdapterItem()
+class FooterItem : NoDataAdapterItem()
 
 // View Holders
 class HeaderViewHolder : LayoutViewHolderManager<HeaderItem>(
@@ -92,14 +96,6 @@ class SongViewHolder(private val imageLoader: ImageLoader) : LayoutViewHolderMan
             itemView.setOnClickListener { item.onSongClick(item.id) }
             imageLoader.load(item.imageUrl).into(itemView.item_song_card)
         }
-    }
-}
-
-class FooterViewHolder : LayoutViewHolderManager<FooterItem>(
-    R.layout.item_footer, FooterItem::class, { ViewHolder(it) }
-) {
-    class ViewHolder(itemView: View) : BaseViewHolder<FooterItem>(itemView) {
-        override fun bind(item: FooterItem) {}
     }
 }
 

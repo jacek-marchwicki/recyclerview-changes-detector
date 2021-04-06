@@ -39,6 +39,8 @@ dependencies {
     androidTestApi 'com.google.truth:truth:0.25'
     androidTestApi 'com.google.dexmaker:dexmaker:1.0'
     androidTestApi 'com.google.dexmaker:dexmaker-mockito:1.0'
+    testImplementation 'junit:junit:4.13.2'
+    testImplementation "org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version"
 }
 
 task sourcesJar(type: Jar) {

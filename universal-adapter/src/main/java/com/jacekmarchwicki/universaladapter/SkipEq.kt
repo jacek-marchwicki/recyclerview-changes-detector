@@ -1,5 +1,5 @@
 /*
- * Copyright 2020 Jacek Marchwicki <jacek.marchwicki@gmail.com>
+ * Copyright 2021 Marcin Adamczewski
  *
  * Licensed under the Apache License, Version 2.0 (the "License"); you may not
  * use this file except in compliance with the License. You may obtain a copy of
@@ -23,31 +23,31 @@ package com.jacekmarchwicki.universaladapter
  *
  * Following example demonstrates usecase:
  *```
- * data class FixedAdapterItem(
+ * data class SkipEqAdapterItem(
  *    val title: String,
- *    val isFavorite: Fixed<Observable<Boolean>,
+ *    val isFavorite: SkipEq<Observable<Boolean>,
  *    override val itemId: Any = title
  * ) : DefaultAdapterItem()
  *
  * class Presenter {
  *    fun createAdapterItems(): List<BaseAdapterItem> {
  *       return listOf(
- *          FixedAdapterItem("title1", favsDao.isFavorite(id).fixed()),
+ *          SkipEqAdapterItem("title1", favsDao.isFavorite(id).skipEq()),
  *       )
  *    }
  * }
  *```
  * Assume that [favsDao.isFavorite() ]returns a new instance of observable
- * every time it is being called. Thus two following FixedAdapterItem with the same title
- * would be different for [BaseAdapterItem.same()] method if we didn't wrap it in the Fixed object.
+ * every time it is being called. Thus two following SkipEqAdapterItem with the same title
+ * would be different for [BaseAdapterItem.same()] method if we didn't wrap it in the SkipEq object.
  * That would cause RecyclerView to re-bind the element which content in fact didn't change.
  */
-class Fixed<T>(val property: T?) {
+class SkipEq<T>(val property: T?) {
 
     override fun equals(other: Any?): Boolean = true
 
     override fun hashCode(): Int = 0
 }
 
-fun <T> T.fixed() = Fixed(this)
+fun <T> T.skipEq() = SkipEq(this)
 

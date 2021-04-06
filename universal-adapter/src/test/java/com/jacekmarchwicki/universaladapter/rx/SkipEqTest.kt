@@ -1,17 +1,17 @@
 package com.jacekmarchwicki.universaladapter.rx
 
 import com.jacekmarchwicki.universaladapter.DefaultAdapterItem
-import com.jacekmarchwicki.universaladapter.Fixed
-import com.jacekmarchwicki.universaladapter.fixed
+import com.jacekmarchwicki.universaladapter.SkipEq
+import com.jacekmarchwicki.universaladapter.skipEq
 import org.junit.Test
 import kotlin.test.assertFalse
 import kotlin.test.assertTrue
 
-class FixedTest {
+class SkipEqTest {
 
-    data class FixedAdapterItem(
+    data class SkipEqAdapterItem(
         val title: String,
-        val testFun: Fixed<() -> Int>,
+        val testFun: SkipEq<() -> Int>,
         override val itemId: Any = title
     ) : DefaultAdapterItem()
 
@@ -22,16 +22,16 @@ class FixedTest {
     ) : DefaultAdapterItem()
 
     @Test
-    fun `when two items differs only in Fixed param, then both items are the same`() {
-        val first = FixedAdapterItem("title", { 1 }.fixed())
-        val second = first.copy(testFun = { 2 }.fixed())
+    fun `when two items differs only in SkipEq param, then both items are the same`() {
+        val first = SkipEqAdapterItem("title", { 1 }.skipEq())
+        val second = first.copy(testFun = { 2 }.skipEq())
         assertTrue { first.same(second) }
     }
 
     @Test
-    fun `when two items differs NOT only in Fixed param, then items are NOT the same`() {
-        val first = FixedAdapterItem("title", { 1 }.fixed())
-        val second = first.copy(title = "title2", testFun = { 2 }.fixed())
+    fun `when two items differs NOT only in SkipEq param, then items are NOT the same`() {
+        val first = SkipEqAdapterItem("title", { 1 }.skipEq())
+        val second = first.copy(title = "title2", testFun = { 2 }.skipEq())
         assertFalse { first.same(second) }
     }
 

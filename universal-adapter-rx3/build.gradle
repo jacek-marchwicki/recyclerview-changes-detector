@@ -3,7 +3,7 @@ plugins {
     id 'kotlin-android'
 }
 
-group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
+group = 'com.github.jacek-marchwicki.recyclerview-changes-detector.universal-adapter-rx3'
 
 android {
     compileSdkVersion 29

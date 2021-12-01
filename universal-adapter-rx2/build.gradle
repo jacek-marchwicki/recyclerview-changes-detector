@@ -4,6 +4,8 @@ plugins {
     id 'com.github.dcendents.android-maven'
 }
 
+group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "29.0.3"

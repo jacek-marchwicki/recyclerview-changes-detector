@@ -3,6 +3,8 @@ plugins {
     id 'kotlin-android'
 }
 
+group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
+
 android {
     compileSdkVersion 29
     buildToolsVersion "30.0.3"

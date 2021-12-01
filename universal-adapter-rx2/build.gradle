@@ -4,7 +4,7 @@ plugins {
     id 'com.github.dcendents.android-maven'
 }
 
-group = 'com.github.jacek-marchwicki.recyclerview-changes-detector'
+group = 'com.github.jacek-marchwicki.recyclerview-changes-detector.universal-adapter-rx2'
 
 android {
     compileSdkVersion 29
